@@ -1,0 +1,10 @@
+<u3Toolbox>
+	<Buttons>
+		<Button title="Ping HDVG" cmd="ping -t 10.1.1.48" />
+		<Button title="Ping TrackVision" cmd="ping -t 10.1.1.110" />
+		<Button title="Ping ..." cmd="ping -t" param1="Podaj adres:" />
+		<Button title="Services" cmd="services.msc" />
+		<Button title="Command" cmd="" param1="Wprowadz komende:" />
+		<Button title="Computer Management" cmd="compmgmt.msc" />
+	</Buttons>
+</u3Toolbox>
