@@ -8,11 +8,20 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Xml;
+using System.IO;
 
 namespace u3Toolbox
 {
+
+    public enum u3tbButtonType
+    {
+        ButtonCommand = 1,
+        ButtonNotepad
+    }
+
     public struct u3tbButton
     {
+        public u3tbButtonType type;
         public string title;
         public string command;
         public string param1;
@@ -46,21 +55,57 @@ namespace u3Toolbox
                 try
                 {
                     button.title = node.Attributes["title"].InnerText;
-                    button.command = node.Attributes["cmd"].InnerText;
                 }
                 catch
                 {
-                    button.title = "";
+                    continue;
                 }
+                string type = "";
                 try
                 {
-                    button.param1 = node.Attributes["param1"].InnerText;
+                    type = node.Attributes["type"].InnerText;
                 }
                 catch
                 {
-                    button.param1 = "";
+                    type = "";
+                }
+                switch (type)
+                {
+                    case "command":
+                        button.type = u3tbButtonType.ButtonCommand;
+                        break;
+                    case "notepad":
+                        button.type = u3tbButtonType.ButtonNotepad;
+                        break;
+                    default:
+                        button.type = u3tbButtonType.ButtonCommand;
+                        break;
                 }
 
+                switch (button.type)
+                {
+                    case u3tbButtonType.ButtonCommand:
+                        try
+                        {
+                            button.command = node.Attributes["cmd"].InnerText;
+                        }
+                        catch
+                        {
+                            button.command = "";
+                        }
+                        try
+                        {
+                            button.param1 = node.Attributes["param1"].InnerText;
+                        }
+                        catch
+                        {
+                            button.param1 = "";
+                        }
+                        break;
+                    case u3tbButtonType.ButtonNotepad:
+                        break;
+                }
+                
                 if (button.title != "")
                     buttonsList.Add(button);
             }
@@ -86,32 +131,58 @@ namespace u3Toolbox
         {
             Button button = sender as Button;
             int i = (int)button.Tag;
-            string cmd = buttonsList[i].command;
-            string paramtitle = buttonsList[i].param1;
-            string param = "";
+            u3tbButtonType type = buttonsList[i].type;
 
-            if (paramtitle != "")
+            switch (type)
             {
-                u3tbParamForm dlg = new u3tbParamForm();
-                dlg.paramLabel.Text = paramtitle;
-                dlg.paramText.Text = "";
-                dlg.ShowDialog();
-                if (dlg.DialogResult == System.Windows.Forms.DialogResult.OK)
-                    param = dlg.paramText.Text;
-                else
-                    return;
-                dlg.Dispose();
+                case u3tbButtonType.ButtonCommand:
+                    string cmd = buttonsList[i].command;
+                    string paramtitle = buttonsList[i].param1;
+                    string param = "";
+
+                    if (paramtitle != "")
+                    {
+                        u3tbParamForm dlg = new u3tbParamForm();
+                        dlg.paramLabel.Text = paramtitle;
+                        dlg.paramText.Text = "";
+                        dlg.ShowDialog();
+                        if (dlg.DialogResult == System.Windows.Forms.DialogResult.OK)
+                            param = dlg.paramText.Text;
+                        else
+                            return;
+                        dlg.Dispose();
+                    }
+
+                    Process process = new Process();
+                    process.StartInfo.FileName = "cmd.exe";
+                    process.StartInfo.Arguments = "/c " + cmd;
+                    if (param != "")
+                    {
+                        process.StartInfo.Arguments += " " + param;
+                    }
+                    process.Start();
+                    //process.WaitForExit();
+                    break;
+                case u3tbButtonType.ButtonNotepad:
+                    string title = no_spaces(buttonsList[i].title);
+                    string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + title + ".txt";
+
+                    u3tbNotepadForm notepad = new u3tbNotepadForm();
+                    notepad.Text = title;
+                    notepad.notepadText.Font = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
+                    StreamReader reader = new StreamReader(filename, Encoding.Default, true);
+                    notepad.notepadText.Text = reader.ReadToEnd();
+                    notepad.filename = filename;
+                    notepad.Show();
+                    notepad.notepadText.DeselectAll();
+                    break;
             }
 
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.Arguments = "/c " + cmd;
-            if (param != "")
-            {
-                process.StartInfo.Arguments += " " + param;
-            }
-            process.Start();
-            //process.WaitForExit();
+        }
+
+        public string no_spaces(string badstring)
+        {
+            return badstring.Replace(" ", "_");
         }
 
     }

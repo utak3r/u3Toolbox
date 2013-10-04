@@ -25,7 +25,9 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>http://utak3r.pl/apps/u3Toolbox/</UpdateUrl>
-    <ApplicationRevision>2</ApplicationRevision>
+    <WebPage>publish.htm</WebPage>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -92,6 +94,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="u3tbNotepadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="u3tbNotepadForm.Designer.cs">
+      <DependentUpon>u3tbNotepadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="u3tbParamForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +117,9 @@
     </Compile>
     <EmbeddedResource Include="u3tbMainForm.resx">
       <DependentUpon>u3tbMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="u3tbNotepadForm.resx">
+      <DependentUpon>u3tbNotepadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="u3tbParamForm.resx">
       <DependentUpon>u3tbParamForm.cs</DependentUpon>
