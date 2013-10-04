@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(u3tbParamForm));
             this.paramLabel = new System.Windows.Forms.Label();
             this.paramText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             this.ClientSize = new System.Drawing.Size(284, 59);
             this.Controls.Add(this.paramText);
             this.Controls.Add(this.paramLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "u3tbParamForm";
             this.Text = "u3tbParamForm";
             this.ResumeLayout(false);
