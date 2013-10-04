@@ -76,6 +76,7 @@ namespace u3Toolbox
                 newButton.Location = new Point(4, 4 + 32*i);
                 newButton.Text = buttonsList[i].title;
                 newButton.Click += button_Click;
+                newButton.FlatStyle = FlatStyle.Popup;
                 buttonsPanel.Controls.Add(newButton);
             }
             this.Height = 32 * (buttonsList.Count + 1) + 8;
