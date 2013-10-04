@@ -49,7 +49,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "u3tbMainForm";
-            this.ShowIcon = false;
             this.Text = "u3Toolbox";
             this.Load += new System.EventHandler(this.u3tbMainForm_Load);
             this.ResumeLayout(false);
