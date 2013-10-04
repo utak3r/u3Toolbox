@@ -20,6 +20,12 @@ namespace u3Toolbox
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
             {
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                this.Close();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
                 this.Close();
             }
         }

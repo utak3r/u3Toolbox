@@ -96,7 +96,10 @@ namespace u3Toolbox
                 dlg.paramLabel.Text = paramtitle;
                 dlg.paramText.Text = "";
                 dlg.ShowDialog();
-                param = dlg.paramText.Text;
+                if (dlg.DialogResult == System.Windows.Forms.DialogResult.OK)
+                    param = dlg.paramText.Text;
+                else
+                    return;
                 dlg.Dispose();
             }
 
