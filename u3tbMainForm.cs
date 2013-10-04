@@ -78,6 +78,7 @@ namespace u3Toolbox
                 newButton.Click += button_Click;
                 buttonsPanel.Controls.Add(newButton);
             }
+            this.Height = 32 * (buttonsList.Count + 1) + 8;
         }
 
         private void button_Click(object sender, EventArgs e)
