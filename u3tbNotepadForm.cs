@@ -27,9 +27,15 @@ namespace u3Toolbox
         private void modifyTimer_Tick(object sender, EventArgs e)
         {
             modifyTimer.Stop();
-            StreamWriter writer = new StreamWriter(filename, false, Encoding.Default);
-            writer.Write(notepadText.Text);
-            notepadText.Modified = false;
+            try
+            {
+                System.IO.File.WriteAllText(filename, notepadText.Text, Encoding.Unicode);
+                notepadText.Modified = false;
+            }
+            catch
+            {
+                MessageBox.Show("u3Toolbox couldn't write to the file.", "u3Toolbox notepad");
+            }
         }
 
         private void notepadText_ModifiedChanged(object sender, EventArgs e)

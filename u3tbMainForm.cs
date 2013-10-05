@@ -170,8 +170,11 @@ namespace u3Toolbox
                     u3tbNotepadForm notepad = new u3tbNotepadForm();
                     notepad.Text = title;
                     notepad.notepadText.Font = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
-                    StreamReader reader = new StreamReader(filename, Encoding.Default, true);
-                    notepad.notepadText.Text = reader.ReadToEnd();
+
+                    if (File.Exists(filename))
+                    {
+                        notepad.notepadText.Text = System.IO.File.ReadAllText(filename, Encoding.Unicode);
+                    }
                     notepad.filename = filename;
                     notepad.Show();
                     notepad.notepadText.DeselectAll();
