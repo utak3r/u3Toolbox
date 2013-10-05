@@ -12,7 +12,7 @@ namespace u3Toolbox
 {
     public partial class u3tbNotepadForm : Form
     {
-        public int NOTEPAD_AUTOSAVE_INTERVAL = 5000;
+        public int NOTEPAD_AUTOSAVE_INTERVAL = 3000;
         public string filename;
         private Timer modifyTimer;
 
@@ -29,7 +29,7 @@ namespace u3Toolbox
             modifyTimer.Stop();
             try
             {
-                System.IO.File.WriteAllText(filename, notepadText.Text, Encoding.Unicode);
+                notepadText.SaveFile(filename);
                 notepadText.Modified = false;
             }
             catch

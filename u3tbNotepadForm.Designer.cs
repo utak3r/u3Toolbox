@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(u3tbNotepadForm));
-            this.notepadText = new System.Windows.Forms.TextBox();
+            this.notepadText = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // notepadText
             // 
             this.notepadText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notepadText.Location = new System.Drawing.Point(0, 0);
-            this.notepadText.Multiline = true;
             this.notepadText.Name = "notepadText";
             this.notepadText.Size = new System.Drawing.Size(378, 343);
-            this.notepadText.TabIndex = 0;
+            this.notepadText.TabIndex = 1;
+            this.notepadText.Text = "";
             this.notepadText.ModifiedChanged += new System.EventHandler(this.notepadText_ModifiedChanged);
             // 
             // u3tbNotepadForm
@@ -53,13 +53,12 @@
             this.ShowIcon = false;
             this.Text = "u3tbNotepadForm";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        public System.Windows.Forms.TextBox notepadText;
+        public System.Windows.Forms.RichTextBox notepadText;
 
     }
 }

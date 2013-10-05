@@ -164,8 +164,8 @@ namespace u3Toolbox
                     //process.WaitForExit();
                     break;
                 case u3tbButtonType.ButtonNotepad:
-                    string title = no_spaces(buttonsList[i].title);
-                    string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + title + ".txt";
+                    string title = buttonsList[i].title;
+                    string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + no_spaces(title) + ".rtf";
 
                     u3tbNotepadForm notepad = new u3tbNotepadForm();
                     notepad.Text = title;
@@ -173,7 +173,14 @@ namespace u3Toolbox
 
                     if (File.Exists(filename))
                     {
-                        notepad.notepadText.Text = System.IO.File.ReadAllText(filename, Encoding.Unicode);
+                        try
+                        {
+                            notepad.notepadText.LoadFile(filename);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Couldn't recognize file format, while trying to load a note!", "u3Toolbox notepad");
+                        }
                     }
                     notepad.filename = filename;
                     notepad.Show();
