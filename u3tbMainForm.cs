@@ -43,6 +43,14 @@ namespace u3Toolbox
             createButtons();
         }
 
+        private void u3tbMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (Form wnd in Application.OpenForms)
+            {
+                //wnd.Close();
+            }
+        }
+
         private void u3tbLoadConfig()
         {
             XmlDocument cfg = new XmlDocument();

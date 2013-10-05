@@ -50,6 +50,7 @@
             this.MaximizeBox = false;
             this.Name = "u3tbMainForm";
             this.Text = "u3Toolbox";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbMainForm_FormClosing);
             this.Load += new System.EventHandler(this.u3tbMainForm_Load);
             this.ResumeLayout(false);
 

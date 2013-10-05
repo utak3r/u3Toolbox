@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace u3Toolbox
@@ -14,28 +15,44 @@ namespace u3Toolbox
     {
         public int NOTEPAD_AUTOSAVE_INTERVAL = 3000;
         public string filename;
-        private Timer modifyTimer;
+        private System.Windows.Forms.Timer modifyTimer;
+        public Boolean isSaving = false;
 
         public u3tbNotepadForm()
         {
             InitializeComponent();
-            modifyTimer = new Timer();
+            modifyTimer = new System.Windows.Forms.Timer();
             modifyTimer.Interval = NOTEPAD_AUTOSAVE_INTERVAL;
             modifyTimer.Tick += new EventHandler(modifyTimer_Tick);
         }
 
-        private void modifyTimer_Tick(object sender, EventArgs e)
+        private void u3tbNotepadForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            while (isSaving) Thread.Sleep(100);
+            if (notepadText.Modified)
+                saveFile();
             modifyTimer.Stop();
+        }
+
+        private void saveFile()
+        {
             try
             {
+                isSaving = true;
                 notepadText.SaveFile(filename);
                 notepadText.Modified = false;
+                isSaving = false;
             }
             catch
             {
                 MessageBox.Show("u3Toolbox couldn't write to the file.", "u3Toolbox notepad");
             }
+        }
+
+        private void modifyTimer_Tick(object sender, EventArgs e)
+        {
+            modifyTimer.Stop();
+            saveFile();
         }
 
         private void notepadText_ModifiedChanged(object sender, EventArgs e)

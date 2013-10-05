@@ -52,6 +52,7 @@
             this.Name = "u3tbNotepadForm";
             this.ShowIcon = false;
             this.Text = "u3tbNotepadForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbNotepadForm_FormClosing);
             this.ResumeLayout(false);
 
         }
