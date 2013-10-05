@@ -51,8 +51,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "u3tbNotepadForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "u3tbNotepadForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbNotepadForm_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.u3tbNotepadForm_ResizeEnd);
+            this.LocationChanged += new System.EventHandler(this.u3tbNotepadForm_LocationChanged);
             this.ResumeLayout(false);
 
         }

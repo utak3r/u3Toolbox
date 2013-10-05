@@ -13,20 +13,6 @@ using System.IO;
 namespace u3Toolbox
 {
 
-    public enum u3tbButtonType
-    {
-        ButtonCommand = 1,
-        ButtonNotepad
-    }
-
-    public struct u3tbButton
-    {
-        public u3tbButtonType type;
-        public string title;
-        public string command;
-        public string param1;
-    }
-
     public partial class u3tbMainForm : Form
     {
         public List<u3tbButton> buttonsList;
@@ -111,6 +97,19 @@ namespace u3Toolbox
                         }
                         break;
                     case u3tbButtonType.ButtonNotepad:
+                        try
+                        {
+                            int left = Convert.ToInt32(node.Attributes["left"].InnerText);
+                            int top = Convert.ToInt32(node.Attributes["top"].InnerText);
+                            int width = Convert.ToInt32(node.Attributes["width"].InnerText);
+                            int height = Convert.ToInt32(node.Attributes["height"].InnerText);
+                            button.wndProperties = new u3tbWndProperties();
+                            button.wndProperties.location = new Point(left, top);
+                            button.wndProperties.size = new Size(width, height);
+                        }
+                        catch
+                        {
+                        }
                         break;
                 }
                 
@@ -169,16 +168,16 @@ namespace u3Toolbox
                         process.StartInfo.Arguments += " " + param;
                     }
                     process.Start();
-                    //process.WaitForExit();
                     break;
                 case u3tbButtonType.ButtonNotepad:
                     string title = buttonsList[i].title;
                     string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + no_spaces(title) + ".rtf";
 
                     u3tbNotepadForm notepad = new u3tbNotepadForm();
+                    notepad.mainForm = this;
+                    notepad.toolboxPosition = i;
                     notepad.Text = title;
                     notepad.notepadText.Font = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
-
                     if (File.Exists(filename))
                     {
                         try
@@ -191,6 +190,25 @@ namespace u3Toolbox
                         }
                     }
                     notepad.filename = filename;
+                    if (buttonsList[i].wndProperties != null)
+                    {
+                        try
+                        {
+                            notepad.StartPosition = FormStartPosition.Manual;
+                            notepad.DesktopBounds = new Rectangle(
+                                buttonsList[i].wndProperties.location,
+                                buttonsList[i].wndProperties.size);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else
+                    {
+                        buttonsList[i].wndProperties = new u3tbWndProperties();
+                        buttonsList[i].wndProperties.location = notepad.DesktopBounds.Location;
+                        buttonsList[i].wndProperties.size = notepad.DesktopBounds.Size;
+                    }
                     notepad.Show();
                     notepad.notepadText.DeselectAll();
                     break;
@@ -203,5 +221,32 @@ namespace u3Toolbox
             return badstring.Replace(" ", "_");
         }
 
+        public void saveNotepadGeometry(int which, System.Drawing.Point location, System.Drawing.Size size)
+        {
+            buttonsList[which].wndProperties.location = location;
+            buttonsList[which].wndProperties.size = size;
+        }
     }
+
+    public enum u3tbButtonType
+    {
+        ButtonCommand = 1,
+        ButtonNotepad
+    }
+
+    public class u3tbButton
+    {
+        public u3tbButtonType type;
+        public u3tbWndProperties wndProperties;
+        public string title { get; set; }
+        public string command { get; set; }
+        public string param1 { get; set; }
+    }
+
+    public class u3tbWndProperties
+    {
+        public System.Drawing.Point location { get; set; }
+        public System.Drawing.Size size { get; set; }
+    }
+
 }

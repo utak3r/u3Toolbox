@@ -6,6 +6,6 @@
 		<Button title="Services" cmd="services.msc" />
 		<Button title="Command" cmd="" param1="Wprowadz komende:" />
 		<Button title="Computer Management" cmd="compmgmt.msc" />
-		<Button title="Notatki HDVG" type="notepad" />
+		<Button title="Notatki HDVG" type="notepad" top="40" left="400" width="400" height="800" />
 	</Buttons>
 </u3Toolbox>

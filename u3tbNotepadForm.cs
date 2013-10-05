@@ -15,6 +15,8 @@ namespace u3Toolbox
     {
         public int NOTEPAD_AUTOSAVE_INTERVAL = 3000;
         public string filename;
+        public int toolboxPosition = -1;
+        public u3tbMainForm mainForm = null;
         private System.Windows.Forms.Timer modifyTimer;
         public Boolean isSaving = false;
 
@@ -58,6 +60,27 @@ namespace u3Toolbox
         private void notepadText_ModifiedChanged(object sender, EventArgs e)
         {
             modifyTimer.Start();
+        }
+
+        private void saveGeometry()
+        {
+            if (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] != null)
+            {
+                (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] as u3tbMainForm).saveNotepadGeometry(
+                    toolboxPosition, 
+                    this.DesktopBounds.Location, 
+                    this.DesktopBounds.Size);
+            }
+        }
+
+        private void u3tbNotepadForm_LocationChanged(object sender, EventArgs e)
+        {
+            saveGeometry();
+        }
+
+        private void u3tbNotepadForm_ResizeEnd(object sender, EventArgs e)
+        {
+            saveGeometry();
         }
 
     }
