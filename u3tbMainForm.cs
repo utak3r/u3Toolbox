@@ -35,6 +35,7 @@ namespace u3Toolbox
             {
                 //wnd.Close();
             }
+            saveConfig();
         }
 
         private void u3tbLoadConfig()
@@ -152,6 +153,60 @@ namespace u3Toolbox
                 buttonsPanel.Controls.Add(newButton);
             }
             this.Height = 32 * (buttonsList.Count + 1) + 8;
+        }
+
+        private void saveConfig()
+        {
+            string cfgString = "<u3Toolbox>\r\n";
+
+            string prefString = savePreferences();
+            string buttonsString = "\t<Buttons>\r\n";
+            foreach (u3tbButton button in buttonsList)
+            {
+                buttonsString += "\t\t" + saveButton(button) + "\r\n";
+            }
+            buttonsString += "\t</Buttons>\r\n";
+
+            cfgString += prefString + buttonsString + "</u3Toolbox>\r\n";
+
+            System.IO.File.WriteAllText(
+                AppDomain.CurrentDomain.BaseDirectory + "\\u3ToolboxCfg.xml",
+                cfgString);
+        }
+
+        private string savePreferences()
+        {
+            return "\t<Preferences>\r\n" +
+                "\t\t<Position left=\"" + this.DesktopBounds.Location.X + "\" " +
+                "top=\"" + this.DesktopBounds.Location.Y + "\" " +
+                "width=\"" + this.DesktopBounds.Size.Width + "\" " +
+                "height=\"" + this.DesktopBounds.Size.Height + "\" />\r\n" +
+                "\t</Preferences>\r\n";
+        }
+
+        private string saveButton(u3tbButton button)
+        {
+            string buttonString = "<Button title=\"" + button.title + "\" ";
+            switch (button.type)
+            {
+                case u3tbButtonType.ButtonCommand:
+                    buttonString += "type=\"command\" ";
+                    buttonString += "cmd=\"" + button.command + "\" ";
+                    if (button.param1 != "")
+                        buttonString += "param1=\"" + button.param1 + "\" ";
+                    break;
+                case u3tbButtonType.ButtonNotepad:
+                    buttonString += "type=\"notepad\" ";
+                    if (button.wndProperties != null)
+                        buttonString +=
+                            "left=\"" + button.wndProperties.location.X + "\" " +
+                            "top=\"" + button.wndProperties.location.Y + "\" " +
+                            "width=\"" + button.wndProperties.size.Width + "\" " +
+                            "height=\"" + button.wndProperties.size.Height + "\" ";
+                    break;
+            }
+            buttonString += "/>";
+            return buttonString;
         }
 
         private void button_Click(object sender, EventArgs e)
