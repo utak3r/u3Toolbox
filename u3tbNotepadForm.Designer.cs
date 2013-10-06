@@ -35,6 +35,9 @@
             this.btnFormatItalic = new System.Windows.Forms.ToolStripButton();
             this.btnFormatStrikeout = new System.Windows.Forms.ToolStripButton();
             this.btnFormatUnderline = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbFontFamily = new System.Windows.Forms.ToolStripComboBox();
+            this.cbFontSize = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +48,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.notepadText.Location = new System.Drawing.Point(0, 28);
             this.notepadText.Name = "notepadText";
-            this.notepadText.Size = new System.Drawing.Size(260, 221);
+            this.notepadText.Size = new System.Drawing.Size(595, 221);
             this.notepadText.TabIndex = 1;
             this.notepadText.Text = "";
             this.notepadText.SelectionChanged += new System.EventHandler(this.notepadText_SelectionChanged);
@@ -57,10 +60,13 @@
             this.btnFormatBold,
             this.btnFormatItalic,
             this.btnFormatStrikeout,
-            this.btnFormatUnderline});
+            this.btnFormatUnderline,
+            this.toolStripSeparator1,
+            this.cbFontFamily,
+            this.cbFontSize});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(260, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(595, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -108,11 +114,50 @@
             this.btnFormatUnderline.Text = "Underlined";
             this.btnFormatUnderline.Click += new System.EventHandler(this.btnFormatUnderline_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // cbFontFamily
+            // 
+            this.cbFontFamily.AutoSize = false;
+            this.cbFontFamily.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFontFamily.DropDownWidth = 180;
+            this.cbFontFamily.Name = "cbFontFamily";
+            this.cbFontFamily.Size = new System.Drawing.Size(120, 23);
+            this.cbFontFamily.SelectedIndexChanged += new System.EventHandler(this.cbFontFamily_SelectedIndexChanged);
+            // 
+            // cbFontSize
+            // 
+            this.cbFontSize.DropDownWidth = 40;
+            this.cbFontSize.Items.AddRange(new object[] {
+            "6",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.cbFontSize.Name = "cbFontSize";
+            this.cbFontSize.Size = new System.Drawing.Size(75, 25);
+            this.cbFontSize.TextChanged += new System.EventHandler(this.cbFontSize_TextChanged);
+            // 
             // u3tbNotepadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 249);
+            this.ClientSize = new System.Drawing.Size(595, 249);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.notepadText);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -122,6 +167,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "u3tbNotepadForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbNotepadForm_FormClosing);
+            this.Load += new System.EventHandler(this.u3tbNotepadForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -137,6 +183,9 @@
         private System.Windows.Forms.ToolStripButton btnFormatItalic;
         private System.Windows.Forms.ToolStripButton btnFormatStrikeout;
         private System.Windows.Forms.ToolStripButton btnFormatUnderline;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripComboBox cbFontFamily;
+        private System.Windows.Forms.ToolStripComboBox cbFontSize;
 
     }
 }

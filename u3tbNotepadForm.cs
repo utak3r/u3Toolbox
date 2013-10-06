@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace u3Toolbox
 {
@@ -35,6 +36,21 @@ namespace u3Toolbox
             if (notepadText.Modified)
                 saveFile();
             modifyTimer.Stop();
+        }
+
+        private void u3tbNotepadForm_Load(object sender, EventArgs e)
+        {
+            fillFontsList();
+        }
+
+        private void fillFontsList()
+        {
+            foreach (FontFamily font in System.Drawing.FontFamily.Families)
+            {
+                cbFontFamily.Items.Add(font.Name);
+            }
+            cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(notepadText.Font.Name);
+            cbFontSize.SelectedIndex = cbFontSize.FindStringExact(Convert.ToString(notepadText.Font.Size));
         }
 
         private void saveGeometry()
@@ -106,7 +122,7 @@ namespace u3Toolbox
             if (btnFormatUnderline.Checked)
                 style |= FontStyle.Underline;
 
-            notepadText.SelectionFont = new Font(notepadText.Font, style);
+            notepadText.SelectionFont = new Font(notepadText.SelectionFont, style);
         }
 
         private void updateStyleButtons()
@@ -131,9 +147,41 @@ namespace u3Toolbox
             btnFormatUnderline.Checked = underline;
         }
 
+        private void updateFontComboBoxes()
+        {
+            string name = notepadText.SelectionFont.Name;
+            float size = notepadText.SelectionFont.Size;
+            cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(name);
+            cbFontSize.SelectedIndex = cbFontSize.FindStringExact(Convert.ToString(size));
+            cbFontSize.Text = Convert.ToString(size);
+        }
+
         private void notepadText_SelectionChanged(object sender, EventArgs e)
         {
             updateStyleButtons();
+            updateFontComboBoxes();
+        }
+
+        private void cbFontFamily_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbFontFamily.Text != "")
+            {
+                FontStyle style = notepadText.SelectionFont.Style;
+                float size = notepadText.SelectionFont.Size;
+                notepadText.SelectionFont = new Font(
+                    cbFontFamily.Text, 
+                    size, style);
+                notepadText.Focus();
+            }
+        }
+
+        private void cbFontSize_TextChanged(object sender, EventArgs e)
+        {
+            string name = notepadText.SelectionFont.Name;
+            FontStyle style = notepadText.SelectionFont.Style;
+            float size = float.Parse(cbFontSize.Text, NumberStyles.Float, CultureInfo.InvariantCulture);
+            notepadText.SelectionFont = new Font(name, size, style);
+            notepadText.Focus();
         }
 
     }
