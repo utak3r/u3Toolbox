@@ -33,9 +33,11 @@ namespace u3Toolbox
         {
             foreach (Form wnd in Application.OpenForms)
             {
-                //wnd.Close();
+                if (wnd.Name != "u3tbMainForm")
+                    wnd.Close();
             }
             saveConfig();
+            e.Cancel = false;
         }
 
         private void u3tbLoadConfig()
