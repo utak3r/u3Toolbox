@@ -179,7 +179,14 @@ namespace u3Toolbox
         {
             string name = notepadText.SelectionFont.Name;
             FontStyle style = notepadText.SelectionFont.Style;
-            float size = float.Parse(cbFontSize.Text, NumberStyles.Float, CultureInfo.InvariantCulture);
+            float size = 10;
+            try
+            {
+                size = float.Parse(cbFontSize.Text, NumberStyles.Float, CultureInfo.InvariantCulture);
+            }
+            catch
+            {                
+            }
             notepadText.SelectionFont = new Font(name, size, style);
             notepadText.Focus();
         }
