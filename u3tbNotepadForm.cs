@@ -30,10 +30,22 @@ namespace u3Toolbox
 
         private void u3tbNotepadForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            saveGeometry();
             while (isSaving) Thread.Sleep(100);
             if (notepadText.Modified)
                 saveFile();
             modifyTimer.Stop();
+        }
+
+        private void saveGeometry()
+        {
+            if (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] != null)
+            {
+                (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] as u3tbMainForm).saveNotepadGeometry(
+                    toolboxPosition,
+                    this.DesktopBounds.Location,
+                    this.DesktopBounds.Size);
+            }
         }
 
         private void saveFile()
@@ -60,27 +72,6 @@ namespace u3Toolbox
         private void notepadText_ModifiedChanged(object sender, EventArgs e)
         {
             modifyTimer.Start();
-        }
-
-        private void saveGeometry()
-        {
-            if (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] != null)
-            {
-                (System.Windows.Forms.Application.OpenForms["u3tbMainForm"] as u3tbMainForm).saveNotepadGeometry(
-                    toolboxPosition, 
-                    this.DesktopBounds.Location, 
-                    this.DesktopBounds.Size);
-            }
-        }
-
-        private void u3tbNotepadForm_LocationChanged(object sender, EventArgs e)
-        {
-            saveGeometry();
-        }
-
-        private void u3tbNotepadForm_ResizeEnd(object sender, EventArgs e)
-        {
-            saveGeometry();
         }
 
     }
