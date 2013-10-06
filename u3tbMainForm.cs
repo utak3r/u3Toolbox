@@ -41,8 +41,28 @@ namespace u3Toolbox
         {
             XmlDocument cfg = new XmlDocument();
             cfg.Load(AppDomain.CurrentDomain.BaseDirectory + "\\u3ToolboxCfg.xml");
-            buttonsList = new List<u3tbButton>();
 
+            // main app preferencies
+            XmlNode prefnode = cfg.SelectSingleNode("u3Toolbox/Preferences/Position");
+            if (prefnode != null)
+            {
+                try
+                {
+                    this.StartPosition = FormStartPosition.Manual;
+                    this.DesktopBounds = new Rectangle(
+                        Convert.ToInt32(prefnode.Attributes["left"].InnerText),
+                        Convert.ToInt32(prefnode.Attributes["top"].InnerText),
+                        Convert.ToInt32(prefnode.Attributes["width"].InnerText),
+                        Convert.ToInt32(prefnode.Attributes["height"].InnerText));
+                }
+                catch
+                {
+                    this.StartPosition = FormStartPosition.WindowsDefaultBounds;
+                }
+            }
+
+            // buttons list
+            buttonsList = new List<u3tbButton>();
             foreach (XmlNode node in cfg.SelectNodes("u3Toolbox/Buttons/Button"))
             {
                 u3tbButton button = new u3tbButton();
