@@ -2,3 +2,6 @@ bin/
 obj/
 _release_/
 *.suo
+images/16x16/
+images/scalable/
+images/tango-icon-theme-0.8.90.tar
