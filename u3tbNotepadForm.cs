@@ -74,5 +74,67 @@ namespace u3Toolbox
             modifyTimer.Start();
         }
 
+        private void btnFormatBold_Click(object sender, EventArgs e)
+        {
+            changeStyle();
+        }
+
+        private void btnFormatItalic_Click(object sender, EventArgs e)
+        {
+            changeStyle();
+        }
+
+        private void btnFormatStrikeout_Click(object sender, EventArgs e)
+        {
+            changeStyle();
+        }
+
+        private void btnFormatUnderline_Click(object sender, EventArgs e)
+        {
+            changeStyle();
+        }
+
+        private void changeStyle()
+        {
+            FontStyle style = FontStyle.Regular;
+            if (btnFormatBold.Checked)
+                style |= FontStyle.Bold;
+            if (btnFormatItalic.Checked)
+                style |= FontStyle.Italic;
+            if (btnFormatStrikeout.Checked)
+                style |= FontStyle.Strikeout;
+            if (btnFormatUnderline.Checked)
+                style |= FontStyle.Underline;
+
+            notepadText.SelectionFont = new Font(notepadText.Font, style);
+        }
+
+        private void updateStyleButtons()
+        {
+            FontStyle style = notepadText.SelectionFont.Style;
+            bool bold = false;
+            bool italic = false;
+            bool strikeout = false;
+            bool underline = false;
+            if (style.HasFlag(FontStyle.Bold))
+                bold = true;
+            if (style.HasFlag(FontStyle.Italic))
+                italic = true;
+            if (style.HasFlag(FontStyle.Strikeout))
+                strikeout = true;
+            if (style.HasFlag(FontStyle.Underline))
+                underline = true;
+
+            btnFormatBold.Checked = bold;
+            btnFormatItalic.Checked = italic;
+            btnFormatStrikeout.Checked = strikeout;
+            btnFormatUnderline.Checked = underline;
+        }
+
+        private void notepadText_SelectionChanged(object sender, EventArgs e)
+        {
+            updateStyleButtons();
+        }
+
     }
 }
