@@ -41,6 +41,7 @@ namespace u3Toolbox
         private void u3tbNotepadForm_Load(object sender, EventArgs e)
         {
             fillFontsList();
+            fillColorsList();
         }
 
         private void fillFontsList()
@@ -51,6 +52,34 @@ namespace u3Toolbox
             }
             cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(notepadText.Font.Name);
             cbFontSize.SelectedIndex = cbFontSize.FindStringExact(Convert.ToString(notepadText.Font.Size));
+        }
+
+        private void fillColorsList()
+        {
+            cbFontColor.Items.Add("Black");
+            cbFontColor.Items.Add("DarkGray");
+            cbFontColor.Items.Add("LightGray");
+            cbFontColor.Items.Add("White");
+            cbFontColor.Items.Add("Red");
+            cbFontColor.Items.Add("Blue");
+            cbFontColor.Items.Add("DarkGreen");
+            cbFontColor.ComboBox.DrawMode = DrawMode.OwnerDrawVariable;
+            cbFontColor.ComboBox.DrawItem += new DrawItemEventHandler(cbFontColor_DrawItem);
+        }
+
+        void cbFontColor_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect = e.Bounds;
+            if (e.Index >= 0)
+            {
+                string n = ((ComboBox)sender).Items[e.Index].ToString();
+                Font f = new Font("Arial", 9, FontStyle.Regular);
+                Color c = Color.FromName(n);
+                Brush b = new SolidBrush(c);
+                g.DrawString(n, f, Brushes.Black, rect.X, rect.Top);
+                g.FillRectangle(b, rect.X + 70, rect.Y + 2, rect.Width - 10, rect.Height - 2);
+            }
         }
 
         private void saveGeometry()
@@ -188,6 +217,13 @@ namespace u3Toolbox
             {                
             }
             notepadText.SelectionFont = new Font(name, size, style);
+            notepadText.Focus();
+        }
+
+        private void cbFontColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Color color = Color.FromName(cbFontColor.Text);
+            notepadText.SelectionColor = color;
             notepadText.Focus();
         }
 

@@ -38,6 +38,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cbFontFamily = new System.Windows.Forms.ToolStripComboBox();
             this.cbFontSize = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbFontColor = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,7 +65,9 @@
             this.btnFormatUnderline,
             this.toolStripSeparator1,
             this.cbFontFamily,
-            this.cbFontSize});
+            this.cbFontSize,
+            this.toolStripSeparator2,
+            this.cbFontColor});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(595, 25);
@@ -130,6 +134,7 @@
             // 
             // cbFontSize
             // 
+            this.cbFontSize.AutoSize = false;
             this.cbFontSize.DropDownWidth = 40;
             this.cbFontSize.Items.AddRange(new object[] {
             "6",
@@ -150,8 +155,22 @@
             "48",
             "72"});
             this.cbFontSize.Name = "cbFontSize";
-            this.cbFontSize.Size = new System.Drawing.Size(75, 25);
+            this.cbFontSize.Size = new System.Drawing.Size(35, 25);
             this.cbFontSize.TextChanged += new System.EventHandler(this.cbFontSize_TextChanged);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // cbFontColor
+            // 
+            this.cbFontColor.AutoSize = false;
+            this.cbFontColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFontColor.DropDownWidth = 250;
+            this.cbFontColor.Name = "cbFontColor";
+            this.cbFontColor.Size = new System.Drawing.Size(50, 23);
+            this.cbFontColor.SelectedIndexChanged += new System.EventHandler(this.cbFontColor_SelectedIndexChanged);
             // 
             // u3tbNotepadForm
             // 
@@ -186,6 +205,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripComboBox cbFontFamily;
         private System.Windows.Forms.ToolStripComboBox cbFontSize;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripComboBox cbFontColor;
 
     }
 }
