@@ -171,6 +171,15 @@ namespace u3Toolbox
 
         private void createButtons()
         {
+            if (buttonsList == null)
+                return;
+
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Button)
+                    this.Controls.Remove(ctrl);
+            }
+
             for (int i = 0; i < buttonsList.Count; i++)
             {
                 Button newButton = new Button();
@@ -182,7 +191,7 @@ namespace u3Toolbox
                 newButton.FlatStyle = FlatStyle.Popup;
                 buttonsPanel.Controls.Add(newButton);
             }
-            this.Height = 32 * (buttonsList.Count + 1) + 8;
+            this.Height = 32 * (buttonsList.Count + 1) + 8 + 25;
         }
 
         private void saveConfig()
@@ -341,6 +350,28 @@ namespace u3Toolbox
         {
             buttonsList[which].wndProperties.location = location;
             buttonsList[which].wndProperties.size = size;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            u3tbAddButtonForm addDlg = new u3tbAddButtonForm();
+            if (addDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                u3tbButton button = new u3tbButton();
+                button.title = addDlg.textTitle.Text;
+                if (addDlg.cbType.Text == "Command")
+                {
+                    button.type = u3tbButtonType.ButtonCommand;
+                    button.command = addDlg.textCommand.Text;
+                    button.param1 = addDlg.textParam1.Text;
+                }
+                if (addDlg.cbType.Text == "Notepad")
+                {
+                    button.type = u3tbButtonType.ButtonNotepad;
+                }
+                buttonsList.Add(button);
+                createButtons();
+            }
         }
     }
 

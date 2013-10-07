@@ -30,15 +30,54 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(u3tbMainForm));
             this.buttonsPanel = new System.Windows.Forms.Panel();
+            this.toolBar = new System.Windows.Forms.ToolStrip();
+            this.btnRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.buttonsPanel.SuspendLayout();
+            this.toolBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.toolBar);
             this.buttonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonsPanel.Location = new System.Drawing.Point(0, 0);
             this.buttonsPanel.Name = "buttonsPanel";
             this.buttonsPanel.Size = new System.Drawing.Size(181, 460);
             this.buttonsPanel.TabIndex = 1;
+            // 
+            // toolBar
+            // 
+            this.toolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRemove,
+            this.btnAdd});
+            this.toolBar.Location = new System.Drawing.Point(0, 435);
+            this.toolBar.Name = "toolBar";
+            this.toolBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolBar.Size = new System.Drawing.Size(181, 25);
+            this.toolBar.TabIndex = 0;
+            this.toolBar.Text = "toolBar";
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnRemove.Image")));
+            this.btnRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(23, 22);
+            this.btnRemove.Text = "btnRemove";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.Image")));
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAdd.Text = "btnAdd";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // u3tbMainForm
             // 
@@ -52,6 +91,10 @@
             this.Text = "u3Toolbox";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbMainForm_FormClosing);
             this.Load += new System.EventHandler(this.u3tbMainForm_Load);
+            this.buttonsPanel.ResumeLayout(false);
+            this.buttonsPanel.PerformLayout();
+            this.toolBar.ResumeLayout(false);
+            this.toolBar.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -59,6 +102,9 @@
         #endregion
 
         private System.Windows.Forms.Panel buttonsPanel;
+        private System.Windows.Forms.ToolStrip toolBar;
+        private System.Windows.Forms.ToolStripButton btnRemove;
+        private System.Windows.Forms.ToolStripButton btnAdd;
     }
 }
 

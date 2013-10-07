@@ -89,6 +89,12 @@
     <Compile Include="u3FontComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="u3tbAddButtonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="u3tbAddButtonForm.Designer.cs">
+      <DependentUpon>u3tbAddButtonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="u3tbMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="u3tbAddButtonForm.resx">
+      <DependentUpon>u3tbAddButtonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="u3tbMainForm.resx">
       <DependentUpon>u3tbMainForm.cs</DependentUpon>
     </EmbeddedResource>
