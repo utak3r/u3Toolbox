@@ -280,6 +280,15 @@ namespace u3Toolbox
                     string title = buttonsList[i].title;
                     string filename = getHomePath() + "\\" + no_spaces(title) + ".rtf";
 
+                    foreach (Form wnd in Application.OpenForms)
+                    {
+                        if (wnd.Text == title)
+                        {
+                            wnd.Focus();
+                            return;
+                        }
+                    }
+
                     u3tbNotepadForm notepad = new u3tbNotepadForm();
                     notepad.mainForm = this;
                     notepad.toolboxPosition = i;
