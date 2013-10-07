@@ -17,7 +17,6 @@ namespace u3Toolbox
     {
         public List<u3tbButton> buttonsList;
 
-
         public u3tbMainForm()
         {
             InitializeComponent();
@@ -33,6 +32,7 @@ namespace u3Toolbox
         {
             foreach (Form wnd in Application.OpenForms)
             {
+                if (wnd != null)
                 if (wnd.Name != "u3tbMainForm")
                     wnd.Close();
             }
@@ -40,10 +40,38 @@ namespace u3Toolbox
             e.Cancel = false;
         }
 
+        public string getHomePath()
+        {
+            string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+                ? Environment.GetEnvironmentVariable("HOME")
+                : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+
+            try
+            {
+                if (!Directory.Exists(homePath + "\\.u3ToolBox"))
+                {
+                    Directory.CreateDirectory(homePath + "\\.u3ToolBox");
+                }
+                homePath += "\\.u3ToolBox";
+            }
+            catch
+            {
+                homePath = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            return homePath;
+        }
+
         private void u3tbLoadConfig()
         {
             XmlDocument cfg = new XmlDocument();
-            cfg.Load(AppDomain.CurrentDomain.BaseDirectory + "\\u3ToolboxCfg.xml");
+            try
+            {
+                cfg.Load(getHomePath() + "\\u3ToolboxCfg.xml");
+            }
+            catch
+            {
+                return;
+            }
 
             // main app preferencies
             XmlNode prefnode = cfg.SelectSingleNode("u3Toolbox/Preferences/Position");
@@ -163,6 +191,8 @@ namespace u3Toolbox
 
             string prefString = savePreferences();
             string buttonsString = "\t<Buttons>\r\n";
+            if ((buttonsList == null) || (buttonsList.Count == 0))
+                return;
             foreach (u3tbButton button in buttonsList)
             {
                 buttonsString += "\t\t" + saveButton(button) + "\r\n";
@@ -172,7 +202,7 @@ namespace u3Toolbox
             cfgString += prefString + buttonsString + "</u3Toolbox>\r\n";
 
             System.IO.File.WriteAllText(
-                AppDomain.CurrentDomain.BaseDirectory + "\\u3ToolboxCfg.xml",
+                getHomePath() + "\\u3ToolboxCfg.xml",
                 cfgString);
         }
 
@@ -248,7 +278,7 @@ namespace u3Toolbox
                     break;
                 case u3tbButtonType.ButtonNotepad:
                     string title = buttonsList[i].title;
-                    string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + no_spaces(title) + ".rtf";
+                    string filename = getHomePath() + "\\" + no_spaces(title) + ".rtf";
 
                     u3tbNotepadForm notepad = new u3tbNotepadForm();
                     notepad.mainForm = this;
