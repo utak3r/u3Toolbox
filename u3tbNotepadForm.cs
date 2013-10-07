@@ -40,19 +40,11 @@ namespace u3Toolbox
 
         private void u3tbNotepadForm_Load(object sender, EventArgs e)
         {
-            fillFontsList();
             fillColorsList();
+            cbFontFamily.LoadFontFamilies();
+            updateStyleButtons();
+            updateFontComboBoxes();            
             this.KeyPreview = true;
-        }
-
-        private void fillFontsList()
-        {
-            foreach (FontFamily font in System.Drawing.FontFamily.Families)
-            {
-                cbFontFamily.Items.Add(font.Name);
-            }
-            cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(notepadText.Font.Name);
-            cbFontSize.SelectedIndex = cbFontSize.FindStringExact(Convert.ToString(notepadText.Font.Size));
         }
 
         private void fillColorsList()
@@ -192,9 +184,10 @@ namespace u3Toolbox
 
         private void updateFontComboBoxes()
         {
-            string name = notepadText.SelectionFont.Name;
+            string name = notepadText.SelectionFont.FontFamily.Name;
             float size = notepadText.SelectionFont.Size;
-            cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(name);
+            //cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(name);
+            cbFontFamily.Text = name;
             cbFontSize.SelectedIndex = cbFontSize.FindStringExact(Convert.ToString(size));
             cbFontSize.Text = Convert.ToString(size);
         }
@@ -202,20 +195,16 @@ namespace u3Toolbox
         private void notepadText_SelectionChanged(object sender, EventArgs e)
         {
             updateStyleButtons();
-            updateFontComboBoxes();
+            updateFontComboBoxes();            
         }
 
         private void cbFontFamily_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbFontFamily.Text != "")
-            {
-                FontStyle style = notepadText.SelectionFont.Style;
-                float size = notepadText.SelectionFont.Size;
-                notepadText.SelectionFont = new Font(
-                    cbFontFamily.Text, 
-                    size, style);
-                notepadText.Focus();
-            }
+            notepadText.SelectionFont = new Font(
+                cbFontFamily.Text,
+                notepadText.SelectionFont.Size,
+                notepadText.SelectionFont.Style);
+            notepadText.Focus();
         }
 
         private void cbFontSize_TextChanged(object sender, EventArgs e)

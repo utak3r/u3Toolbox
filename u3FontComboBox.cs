@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace u3Toolbox
 {
-    public class u3FontComboBox : ComboBox
+    public class u3FontComboBox : ToolStripComboBox
     {
         #region  Private Member Declarations
 
@@ -31,6 +31,37 @@ namespace u3Toolbox
 
             this.CalculateLayout();
             this.CreateStringFormat();
+
+            this.ComboBox.DrawItem += new DrawItemEventHandler(onDrawItem);
+            this.ComboBox.MeasureItem += new MeasureItemEventHandler(onMeasureItem);
+        }
+
+        void onMeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            if (e.Index > -1 && e.Index < this.Items.Count)
+            {
+                e.ItemHeight = _itemHeight;
+            }
+        }
+
+        void onDrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index > -1 && e.Index < this.Items.Count)
+            {
+                e.DrawBackground();
+
+                if ((e.State & DrawItemState.Focus) == DrawItemState.Focus)
+                    e.DrawFocusRectangle();
+
+                using (SolidBrush textBrush = new SolidBrush(e.ForeColor))
+                {
+                    string fontFamilyName;
+
+                    fontFamilyName = this.Items[e.Index].ToString();
+                    e.Graphics.DrawString(fontFamilyName, this.GetFont(fontFamilyName),
+                  textBrush, e.Bounds, _stringFormat);
+                }
+            }
         }
 
         #endregion  Public Constructors
@@ -53,28 +84,6 @@ namespace u3Toolbox
             base.Dispose(disposing);
         }
 
-        protected override void OnDrawItem(DrawItemEventArgs e)
-        {
-            base.OnDrawItem(e);
-
-            if (e.Index > -1 && e.Index < this.Items.Count)
-            {
-                e.DrawBackground();
-
-                if ((e.State & DrawItemState.Focus) == DrawItemState.Focus)
-                    e.DrawFocusRectangle();
-
-                using (SolidBrush textBrush = new SolidBrush(e.ForeColor))
-                {
-                    string fontFamilyName;
-
-                    fontFamilyName = this.Items[e.Index].ToString();
-                    e.Graphics.DrawString(fontFamilyName, this.GetFont(fontFamilyName),
-                  textBrush, e.Bounds, _stringFormat);
-                }
-            }
-        }
-
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
@@ -87,16 +96,6 @@ namespace u3Toolbox
             this.LoadFontFamilies();
 
             base.OnGotFocus(e);
-        }
-
-        protected override void OnMeasureItem(MeasureItemEventArgs e)
-        {
-            base.OnMeasureItem(e);
-
-            if (e.Index > -1 && e.Index < this.Items.Count)
-            {
-                e.ItemHeight = _itemHeight;
-            }
         }
 
         protected override void OnRightToLeftChanged(EventArgs e)
@@ -146,10 +145,10 @@ namespace u3Toolbox
         [Browsable(false), DesignerSerializationVisibility
         (DesignerSerializationVisibility.Hidden),
         EditorBrowsable(EditorBrowsableState.Never)]
-        public new DrawMode DrawMode
+        public DrawMode DrawMode
         {
-            get { return base.DrawMode; }
-            set { base.DrawMode = value; }
+            get { return ComboBox.DrawMode; }
+            set { ComboBox.DrawMode = value; }
         }
 
         [Category("Appearance"), DefaultValue(12)]
@@ -229,7 +228,7 @@ namespace u3Toolbox
             _stringFormat.Alignment = StringAlignment.Near;
             _stringFormat.LineAlignment = StringAlignment.Center;
 
-            if (this.IsUsingRTL(this))
+            if (this.IsUsingRTL(Control))
                 _stringFormat.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
         }
 

@@ -36,7 +36,7 @@
             this.btnFormatStrikeout = new System.Windows.Forms.ToolStripButton();
             this.btnFormatUnderline = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.cbFontFamily = new System.Windows.Forms.ToolStripComboBox();
+            this.cbFontFamily = new u3Toolbox.u3FontComboBox();
             this.cbFontSize = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cbFontColor = new System.Windows.Forms.ToolStripComboBox();
@@ -125,11 +125,10 @@
             // 
             // cbFontFamily
             // 
-            this.cbFontFamily.AutoSize = false;
-            this.cbFontFamily.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFontFamily.DropDownWidth = 180;
+            this.cbFontFamily.MaxDropDownItems = 16;
             this.cbFontFamily.Name = "cbFontFamily";
-            this.cbFontFamily.Size = new System.Drawing.Size(120, 23);
+            this.cbFontFamily.Size = new System.Drawing.Size(121, 25);
             this.cbFontFamily.SelectedIndexChanged += new System.EventHandler(this.cbFontFamily_SelectedIndexChanged);
             // 
             // cbFontSize
@@ -204,10 +203,10 @@
         private System.Windows.Forms.ToolStripButton btnFormatStrikeout;
         private System.Windows.Forms.ToolStripButton btnFormatUnderline;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripComboBox cbFontFamily;
         private System.Windows.Forms.ToolStripComboBox cbFontSize;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripComboBox cbFontColor;
+        private u3FontComboBox cbFontFamily;
 
     }
 }
