@@ -42,6 +42,7 @@ namespace u3Toolbox
         {
             fillFontsList();
             fillColorsList();
+            this.KeyPreview = true;
         }
 
         private void fillFontsList()
@@ -65,6 +66,19 @@ namespace u3Toolbox
             cbFontColor.Items.Add("DarkGreen");
             cbFontColor.ComboBox.DrawMode = DrawMode.OwnerDrawVariable;
             cbFontColor.ComboBox.DrawItem += new DrawItemEventHandler(cbFontColor_DrawItem);
+        }
+
+        private void u3tbNotepadForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.B && Control.ModifierKeys == Keys.Control)
+                btnFormatBold.PerformClick();
+            if (e.KeyCode == Keys.I && Control.ModifierKeys == Keys.Control)
+            {
+                btnFormatItalic.PerformClick();
+                e.Handled = true;
+            }
+            if (e.KeyCode == Keys.U && Control.ModifierKeys == Keys.Control)
+                btnFormatUnderline.PerformClick();
         }
 
         void cbFontColor_DrawItem(object sender, DrawItemEventArgs e)

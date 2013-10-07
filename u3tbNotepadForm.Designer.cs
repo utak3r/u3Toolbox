@@ -155,7 +155,7 @@
             "48",
             "72"});
             this.cbFontSize.Name = "cbFontSize";
-            this.cbFontSize.Size = new System.Drawing.Size(35, 25);
+            this.cbFontSize.Size = new System.Drawing.Size(35, 23);
             this.cbFontSize.TextChanged += new System.EventHandler(this.cbFontSize_TextChanged);
             // 
             // toolStripSeparator2
@@ -187,6 +187,7 @@
             this.Text = "u3tbNotepadForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.u3tbNotepadForm_FormClosing);
             this.Load += new System.EventHandler(this.u3tbNotepadForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.u3tbNotepadForm_KeyDown);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
