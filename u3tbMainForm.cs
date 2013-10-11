@@ -172,10 +172,19 @@ namespace u3Toolbox
             if (buttonsList == null)
                 return;
 
-            foreach (Control ctrl in this.Controls)
+            for (int i = 0; i < buttonsPanel.Controls.Count; i++)
             {
-                if (ctrl is Button)
-                    this.Controls.Remove(ctrl);
+                if (buttonsPanel.Controls[i] is Button)
+                {
+                    Button button = (Button)buttonsPanel.Controls[i];
+                    button.Click -= button_Click;
+                    buttonsPanel.Controls.Remove(buttonsPanel.Controls[i]);
+                    button.Dispose();
+                    // we're modifying the list, which we're iterating! 
+                    // step backwards, so we won't miss anything...
+                    i--;
+                }
+                this.Refresh();
             }
 
             for (int i = 0; i < buttonsList.Count; i++)
@@ -190,6 +199,7 @@ namespace u3Toolbox
                 buttonsPanel.Controls.Add(newButton);
             }
             this.Height = 32 * (buttonsList.Count + 1) + 8 + 25;
+            this.Refresh();
         }
 
         private void saveConfig()
@@ -371,7 +381,14 @@ namespace u3Toolbox
             }
             if (chooseDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
+                if (chooseDlg.lbButtonsList.CheckedItems.Count > 0)
+                {
+                    foreach (u3tbButton button in chooseDlg.lbButtonsList.CheckedItems)
+                    {
+                        buttonsList.Remove(button);
+                    }
+                    createButtons();
+                }
             }
         }
     }

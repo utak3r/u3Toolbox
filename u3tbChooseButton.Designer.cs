@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(u3tbChooseButton));
             this.lbButtonsList = new System.Windows.Forms.CheckedListBox();
             this.lblChoose = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
@@ -88,6 +89,7 @@
             this.Controls.Add(this.lblChoose);
             this.Controls.Add(this.lbButtonsList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "u3tbChooseButton";
