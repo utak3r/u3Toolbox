@@ -95,6 +95,13 @@
     <Compile Include="u3tbAddButtonForm.Designer.cs">
       <DependentUpon>u3tbAddButtonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="u3tbChooseButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="u3tbChooseButton.Designer.cs">
+      <DependentUpon>u3tbChooseButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="u3tbCommon.cs" />
     <Compile Include="u3tbMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +134,9 @@
     </Compile>
     <EmbeddedResource Include="u3tbAddButtonForm.resx">
       <DependentUpon>u3tbAddButtonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="u3tbChooseButton.resx">
+      <DependentUpon>u3tbChooseButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="u3tbMainForm.resx">
       <DependentUpon>u3tbMainForm.cs</DependentUpon>

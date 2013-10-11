@@ -154,9 +154,7 @@ namespace u3Toolbox
                             int top = Convert.ToInt32(node.Attributes["top"].InnerText);
                             int width = Convert.ToInt32(node.Attributes["width"].InnerText);
                             int height = Convert.ToInt32(node.Attributes["height"].InnerText);
-                            button.wndProperties = new u3tbWndProperties();
-                            button.wndProperties.location = new Point(left, top);
-                            button.wndProperties.size = new Size(width, height);
+                            button.wndProperties = new u3tbWndProperties(left, top, width, height);
                         }
                         catch
                         {
@@ -239,11 +237,7 @@ namespace u3Toolbox
                 case u3tbButtonType.ButtonNotepad:
                     buttonString += "type=\"notepad\" ";
                     if (button.wndProperties != null)
-                        buttonString +=
-                            "left=\"" + button.wndProperties.location.X + "\" " +
-                            "top=\"" + button.wndProperties.location.Y + "\" " +
-                            "width=\"" + button.wndProperties.size.Width + "\" " +
-                            "height=\"" + button.wndProperties.size.Height + "\" ";
+                        buttonString += button.wndProperties.XmlString();
                     break;
             }
             buttonString += "/>";
@@ -287,7 +281,7 @@ namespace u3Toolbox
                     break;
                 case u3tbButtonType.ButtonNotepad:
                     string title = buttonsList[i].title;
-                    string filename = getHomePath() + "\\" + no_spaces(title) + ".rtf";
+                    string filename = getHomePath() + "\\" + buttonsList[i].title_no_spaces() + ".rtf";
 
                     foreach (Form wnd in Application.OpenForms)
                     {
@@ -330,20 +324,13 @@ namespace u3Toolbox
                     }
                     else
                     {
-                        buttonsList[i].wndProperties = new u3tbWndProperties();
-                        buttonsList[i].wndProperties.location = notepad.DesktopBounds.Location;
-                        buttonsList[i].wndProperties.size = notepad.DesktopBounds.Size;
+                        buttonsList[i].wndProperties = new u3tbWndProperties(notepad.DesktopBounds.Location, notepad.DesktopBounds.Size);
                     }
                     notepad.Show();
                     notepad.notepadText.DeselectAll();
                     break;
             }
 
-        }
-
-        public string no_spaces(string badstring)
-        {
-            return badstring.Replace(" ", "_");
         }
 
         public void saveNotepadGeometry(int which, System.Drawing.Point location, System.Drawing.Size size)
@@ -373,27 +360,20 @@ namespace u3Toolbox
                 createButtons();
             }
         }
-    }
 
-    public enum u3tbButtonType
-    {
-        ButtonCommand = 1,
-        ButtonNotepad
-    }
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            u3tbChooseButton chooseDlg = new u3tbChooseButton();
+            chooseDlg.lbButtonsList.Items.Clear();
+            foreach (u3tbButton button in buttonsList)
+            {
+                chooseDlg.lbButtonsList.Items.Add(button);
+            }
+            if (chooseDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
 
-    public class u3tbButton
-    {
-        public u3tbButtonType type;
-        public u3tbWndProperties wndProperties;
-        public string title { get; set; }
-        public string command { get; set; }
-        public string param1 { get; set; }
-    }
-
-    public class u3tbWndProperties
-    {
-        public System.Drawing.Point location { get; set; }
-        public System.Drawing.Size size { get; set; }
+            }
+        }
     }
 
 }
