@@ -359,7 +359,7 @@ namespace u3Toolbox
         private void btnAdd_Click(object sender, EventArgs e)
         {
             u3tbAddButtonForm addDlg = new u3tbAddButtonForm();
-            if (addDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (addDlg.ShowDialogNew() == System.Windows.Forms.DialogResult.OK)
             {
                 u3tbButton button = new u3tbButton();
                 button.title = addDlg.textTitle.Text;
@@ -395,6 +395,43 @@ namespace u3Toolbox
                         buttonsList.Remove(button);
                     }
                     createButtons();
+                }
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            u3tbChooseButton chooseDlg = new u3tbChooseButton();
+            chooseDlg.lbButtonsList.Items.Clear();
+            foreach (u3tbButton button in buttonsList)
+            {
+                chooseDlg.lbButtonsList.Items.Add(button);
+            }
+            if (chooseDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (chooseDlg.lbButtonsList.CheckedItems.Count > 0)
+                {
+                    u3tbButton button = chooseDlg.lbButtonsList.CheckedItems[0] as u3tbButton;
+                    int index = chooseDlg.lbButtonsList.CheckedIndices[0];
+                    u3tbAddButtonForm addDlg = new u3tbAddButtonForm();
+                    if (addDlg.ShowDialogEdit(button) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        u3tbButton newButton = new u3tbButton();
+                        newButton.title = addDlg.textTitle.Text;
+                        if (addDlg.cbType.Text == "Command")
+                        {
+                            newButton.type = u3tbButtonType.ButtonCommand;
+                            newButton.command = addDlg.textCommand.Text;
+                            newButton.param1 = addDlg.textParam1.Text;
+                        }
+                        if (addDlg.cbType.Text == "Notepad")
+                        {
+                            newButton.type = u3tbButtonType.ButtonNotepad;
+                        }
+                        buttonsList.RemoveAt(index);
+                        buttonsList.Insert(index, newButton);
+                        createButtons();
+                    }
                 }
             }
         }

@@ -129,6 +129,16 @@
         /K9fcf1/7bLr/+fve4DLAAq9MAoGDDAwAACOnX8jjPo4VwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD2SURBVDhPpY09b4MwEIb9g/kZiUqywwxz9mZIxJQNSyCl
+        cRjCEBADIKUDE9PVr8EtnxI0r/Toznf2Y2but/QOSvDf9AR5nq8CGQkMw1A4jtPr9SP0+ozMCoYsFqwB
+        GQn0D92fhjM9RyYFnucp9MU5kEUC1CGTgjRN1bIrwGwOZFLQBTPXdUdgXtd1X/CIY4rBo6nqLPsoiii6
+        35vagn1VVX2BEIJs25ZYTbXQo7ZnidXuxU3Q6/X9JyjKkoIglATk+76EE+c+cVU5hXL3SxjS9etKRVE2
+        go/95nA6nyjLMkqSZCFPOh4/Sb49M8TcbS6wrcRkjLEfv7g1y33ZjoAAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

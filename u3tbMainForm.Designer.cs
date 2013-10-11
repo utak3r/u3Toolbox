@@ -33,6 +33,7 @@
             this.toolBar = new System.Windows.Forms.ToolStrip();
             this.btnRemove = new System.Windows.Forms.ToolStripButton();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.buttonsPanel.SuspendLayout();
             this.toolBar.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +54,7 @@
             this.toolBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnRemove,
+            this.btnEdit,
             this.btnAdd});
             this.toolBar.Location = new System.Drawing.Point(0, 435);
             this.toolBar.Name = "toolBar";
@@ -83,6 +85,17 @@
             this.btnAdd.ToolTipText = "Add new button";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(23, 22);
+            this.btnEdit.Text = "btnEdit";
+            this.btnEdit.ToolTipText = "Edit the button";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // u3tbMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,6 +123,7 @@
         private System.Windows.Forms.ToolStrip toolBar;
         private System.Windows.Forms.ToolStripButton btnRemove;
         private System.Windows.Forms.ToolStripButton btnAdd;
+        private System.Windows.Forms.ToolStripButton btnEdit;
     }
 }
 
