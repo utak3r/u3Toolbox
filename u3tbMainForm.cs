@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,6 +17,9 @@ namespace u3Toolbox
     public partial class u3tbMainForm : Form
     {
         public List<u3tbButton> buttonsList;
+        public System.Drawing.Color gradientColor1 = Color.FromArgb(150, 150, 150);
+        public System.Drawing.Color gradientColor2 = Color.FromArgb(90, 90, 90);
+        public System.Drawing.Color textColor = Color.WhiteSmoke;
 
         public u3tbMainForm()
         {
@@ -26,6 +30,8 @@ namespace u3Toolbox
         {
             u3tbLoadConfig();
             createButtons();
+            buttonsPanel.Paint += new PaintEventHandler(buttonsPanel_Paint);
+            toolBar.Paint += new PaintEventHandler(toolBar_Paint);
         }
 
         private void u3tbMainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -195,7 +201,8 @@ namespace u3Toolbox
                 newButton.Location = new Point(4, 4 + 32*i);
                 newButton.Text = buttonsList[i].title;
                 newButton.Click += button_Click;
-                newButton.FlatStyle = FlatStyle.Popup;
+                newButton.Paint += new PaintEventHandler(button_Paint);
+                //newButton.FlatStyle = FlatStyle.Popup;
                 buttonsPanel.Controls.Add(newButton);
             }
             this.Height = 32 * (buttonsList.Count + 1) + 8 + 25;
@@ -391,6 +398,58 @@ namespace u3Toolbox
                 }
             }
         }
+
+        void buttonsPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect = new Rectangle(0, 0, this.Size.Width, this.Size.Height);
+            LinearGradientBrush brush = new LinearGradientBrush(rect, gradientColor1, gradientColor2, LinearGradientMode.Vertical);
+            g.FillRectangle(brush, rect);
+        }
+
+        void toolBar_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect = new Rectangle(0, 0, toolBar.Size.Width, toolBar.Size.Height);
+            LinearGradientBrush brush = new LinearGradientBrush(rect, gradientColor2, gradientColor1, LinearGradientMode.Vertical);
+            g.FillRectangle(brush, rect);
+        }
+
+        void button_Paint(object sender, PaintEventArgs e)
+        {
+            if (!(sender is Button))
+                return;
+            Graphics g = e.Graphics;
+            Button button = sender as Button;
+            Rectangle rect = new Rectangle(0, 0, button.Size.Width, button.Size.Height);
+            
+            // background
+            g.FillRectangle(
+                new LinearGradientBrush(rect, gradientColor1, gradientColor2, LinearGradientMode.Vertical),
+                rect
+                );
+
+            // frame
+            g.DrawRectangle(
+                new Pen(textColor), 
+                new Rectangle(0, 0, button.Size.Width - 1, button.Size.Height - 1)
+                );
+
+            // text
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+
+            e.Graphics.DrawString(
+                button.Text, 
+                new Font(button.Font, FontStyle.Bold), 
+                new SolidBrush(textColor), 
+                rect, 
+                format
+                );
+        }
+
+
     }
 
 }

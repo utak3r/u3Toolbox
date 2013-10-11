@@ -39,6 +39,7 @@
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.BackColor = System.Drawing.SystemColors.Control;
             this.buttonsPanel.Controls.Add(this.toolBar);
             this.buttonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonsPanel.Location = new System.Drawing.Point(0, 0);
@@ -68,6 +69,7 @@
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(23, 22);
             this.btnRemove.Text = "btnRemove";
+            this.btnRemove.ToolTipText = "Remove one or more buttons";
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnAdd
@@ -78,12 +80,14 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(23, 22);
             this.btnAdd.Text = "btnAdd";
+            this.btnAdd.ToolTipText = "Add new button";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // u3tbMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(181, 460);
             this.Controls.Add(this.buttonsPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
