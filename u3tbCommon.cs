@@ -61,6 +61,35 @@ namespace u3Toolbox
         }
     }
 
+    public class u3tbStyle
+    {
+        private System.Drawing.Color gradientColor1;
+        private System.Drawing.Color gradientColor2;
+        private System.Drawing.Color textColor;
+
+        public u3tbStyle()
+        {
+            gradientColor1 = Color.FromArgb(150, 150, 150);
+            gradientColor2 = Color.FromArgb(90, 90, 90);
+            textColor = Color.WhiteSmoke;
+        }
+
+        public System.Drawing.Color getGradientColor1()
+        {
+            return gradientColor1;
+        }
+
+        public System.Drawing.Color getGradientColor2()
+        {
+            return gradientColor2;
+        }
+
+        public System.Drawing.Color getTextColor()
+        {
+            return textColor;
+        }
+    }
+
     public static class u3tbUtilities
     {
         public static string getHomePath()

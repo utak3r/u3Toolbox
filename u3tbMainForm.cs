@@ -17,9 +17,7 @@ namespace u3Toolbox
     public partial class u3tbMainForm : Form
     {
         public List<u3tbButton> buttonsList;
-        public System.Drawing.Color gradientColor1 = Color.FromArgb(150, 150, 150);
-        public System.Drawing.Color gradientColor2 = Color.FromArgb(90, 90, 90);
-        public System.Drawing.Color textColor = Color.WhiteSmoke;
+        public u3tbStyle appStyle;
 
         public u3tbMainForm()
         {
@@ -28,6 +26,7 @@ namespace u3Toolbox
 
         private void u3tbMainForm_Load(object sender, EventArgs e)
         {
+            appStyle = new u3tbStyle();
             u3tbLoadConfig();
             createButtons();
             buttonsPanel.Paint += new PaintEventHandler(buttonsPanel_Paint);
@@ -494,7 +493,7 @@ namespace u3Toolbox
         {
             Graphics g = e.Graphics;
             Rectangle rect = new Rectangle(0, 0, this.Size.Width, this.Size.Height);
-            LinearGradientBrush brush = new LinearGradientBrush(rect, gradientColor1, gradientColor2, LinearGradientMode.Vertical);
+            LinearGradientBrush brush = new LinearGradientBrush(rect, appStyle.getGradientColor1(), appStyle.getGradientColor2(), LinearGradientMode.Vertical);
             g.FillRectangle(brush, rect);
         }
 
@@ -502,7 +501,7 @@ namespace u3Toolbox
         {
             Graphics g = e.Graphics;
             Rectangle rect = new Rectangle(0, 0, toolBar.Size.Width, toolBar.Size.Height);
-            LinearGradientBrush brush = new LinearGradientBrush(rect, gradientColor2, gradientColor1, LinearGradientMode.Vertical);
+            LinearGradientBrush brush = new LinearGradientBrush(rect, appStyle.getGradientColor2(), appStyle.getGradientColor1(), LinearGradientMode.Vertical);
             g.FillRectangle(brush, rect);
         }
 
@@ -516,13 +515,13 @@ namespace u3Toolbox
             
             // background
             g.FillRectangle(
-                new LinearGradientBrush(rect, gradientColor1, gradientColor2, LinearGradientMode.Vertical),
+                new LinearGradientBrush(rect, appStyle.getGradientColor1(), appStyle.getGradientColor2(), LinearGradientMode.Vertical),
                 rect
                 );
 
             // frame
             g.DrawRectangle(
-                new Pen(textColor), 
+                new Pen(appStyle.getTextColor()), 
                 new Rectangle(0, 0, button.Size.Width - 1, button.Size.Height - 1)
                 );
 
@@ -533,8 +532,8 @@ namespace u3Toolbox
 
             e.Graphics.DrawString(
                 button.Text, 
-                new Font(button.Font, FontStyle.Bold), 
-                new SolidBrush(textColor), 
+                new Font(button.Font, FontStyle.Bold),
+                new SolidBrush(appStyle.getTextColor()), 
                 rect, 
                 format
                 );
