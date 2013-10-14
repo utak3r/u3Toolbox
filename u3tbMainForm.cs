@@ -26,7 +26,7 @@ namespace u3Toolbox
 
         private void u3tbMainForm_Load(object sender, EventArgs e)
         {
-            appStyle = new u3tbStyle(u3tbStyle.style.LightBlues);
+            appStyle = new u3tbStyle(u3tbStyle.style.Steel);
             u3tbLoadConfig();
             createButtons();
             buttonsPanel.Paint += new PaintEventHandler(buttonsPanel_Paint);

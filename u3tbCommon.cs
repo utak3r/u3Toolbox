@@ -73,7 +73,8 @@ namespace u3Toolbox
         {
             DarkGreys = 1,
             LightGreys,
-            LightBlues
+            LightBlues,
+            Steel
         }
 
         private style currentStyle;
@@ -102,6 +103,9 @@ namespace u3Toolbox
                 case style.LightBlues:
                     name = "LightBlues";
                     break;
+                case style.Steel:
+                    name = "Steel";
+                    break;
             }
             return name;
         }
@@ -111,7 +115,8 @@ namespace u3Toolbox
             return
                 "DarkGreys, " +
                 "LightGreys, " +
-                "LightBlues";
+                "LightBlues, " +
+                "Steel";
         }
 
         public style findStyleFromName(string name)
@@ -123,6 +128,8 @@ namespace u3Toolbox
                 foundStyle = style.LightGreys;
             if (name == "LightBlues")
                 foundStyle = style.LightBlues;
+            if (name == "Steel")
+                foundStyle = style.Steel;
             return foundStyle;
         }
 
@@ -151,6 +158,13 @@ namespace u3Toolbox
                     frameColor = Color.Black;
                     textColor = Color.Black;
                     textFontStyle = FontStyle.Regular;
+                    break;
+                case style.Steel:
+                    gradientColor1 = Color.FromArgb(244, 246, 247);
+                    gradientColor2 = Color.FromArgb(179, 188, 198);
+                    frameColor = Color.FromArgb(63, 66, 68);
+                    textColor = Color.FromArgb(63, 66, 68);
+                    textFontStyle = FontStyle.Bold;
                     break;
             }
         }
