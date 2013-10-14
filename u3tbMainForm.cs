@@ -46,33 +46,12 @@ namespace u3Toolbox
             e.Cancel = false;
         }
 
-        public string getHomePath()
-        {
-            string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
-                ? Environment.GetEnvironmentVariable("HOME")
-                : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-
-            try
-            {
-                if (!Directory.Exists(homePath + "\\.u3ToolBox"))
-                {
-                    Directory.CreateDirectory(homePath + "\\.u3ToolBox");
-                }
-                homePath += "\\.u3ToolBox";
-            }
-            catch
-            {
-                homePath = AppDomain.CurrentDomain.BaseDirectory;
-            }
-            return homePath;
-        }
-
         private void u3tbLoadConfig()
         {
             XmlDocument cfg = new XmlDocument();
             try
             {
-                cfg.Load(getHomePath() + "\\u3ToolboxCfg.xml");
+                cfg.Load(u3tbUtilities.getHomePath() + "\\u3ToolboxCfg.xml");
             }
             catch
             {
@@ -226,7 +205,7 @@ namespace u3Toolbox
             cfgString += prefString + buttonsString + "</u3Toolbox>\r\n";
 
             System.IO.File.WriteAllText(
-                getHomePath() + "\\u3ToolboxCfg.xml",
+                u3tbUtilities.getHomePath() + "\\u3ToolboxCfg.xml",
                 cfgString);
         }
 
@@ -298,7 +277,7 @@ namespace u3Toolbox
                     break;
                 case u3tbButtonType.ButtonNotepad:
                     string title = buttonsList[i].title;
-                    string filename = getHomePath() + "\\" + buttonsList[i].title_no_spaces() + ".rtf";
+                    string filename = u3tbUtilities.getHomePath() + "\\" + buttonsList[i].title_no_spaces() + ".rtf";
 
                     foreach (Form wnd in Application.OpenForms)
                     {
@@ -392,7 +371,82 @@ namespace u3Toolbox
                 {
                     foreach (u3tbButton button in chooseDlg.lbButtonsList.CheckedItems)
                     {
-                        buttonsList.Remove(button);
+                        if (button.type == u3tbButtonType.ButtonNotepad)
+                        {
+                            if (File.Exists(u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf"))
+                            {
+                                switch (MessageBox.Show(
+                                    "The file containing your note exists on the disk.\nDo you want to remove it?",
+                                    "u3Toolbox",
+                                    MessageBoxButtons.YesNoCancel))
+                                {
+                                    case System.Windows.Forms.DialogResult.Yes:
+                                        switch (MessageBox.Show(
+                                            "Are you sure you want to remove the file\n" + u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf ?",
+                                            "u3Toolbox",
+                                            MessageBoxButtons.YesNoCancel))
+                                        {
+                                            case System.Windows.Forms.DialogResult.Yes:
+                                                try
+                                                {
+                                                    File.Delete(u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf");
+                                                }
+                                                catch
+                                                {
+                                                    MessageBox.Show("Couldn't delete the file\n" +
+                                                        u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf\n" +
+                                                        "Leaving it in its current location."
+                                                        );
+                                                }
+                                                buttonsList.Remove(button);
+                                                break;
+                                            case System.Windows.Forms.DialogResult.No:
+                                                continue;
+                                            case System.Windows.Forms.DialogResult.Cancel:
+                                                continue;
+                                        }
+                                        break;
+                                    case System.Windows.Forms.DialogResult.No:
+                                        switch (MessageBox.Show(
+                                            "Preserving the file\n" + u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf\n" +
+                                            "Do you want to move it to your documents folder?",
+                                            "u3Toolbox",
+                                            MessageBoxButtons.YesNoCancel))
+                                        {
+                                            case System.Windows.Forms.DialogResult.Yes:
+                                                try
+                                                {
+                                                    File.Move(
+                                                        u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf",
+                                                        u3tbUtilities.getMyDocumentsPath() + "\\" + button.title_no_spaces() + ".rtf"
+                                                        );
+                                                }
+                                                catch
+                                                {
+                                                    MessageBox.Show("Couldn't move the file\n" +
+                                                        u3tbUtilities.getHomePath() + "\\" + button.title_no_spaces() + ".rtf\n" +
+                                                        "to " + u3tbUtilities.getMyDocumentsPath() + "\\" + button.title_no_spaces() + ".rtf !\n" +
+                                                        "Leaving it in its current location."
+                                                        );
+                                                }
+                                                buttonsList.Remove(button);
+                                                break;
+                                            case System.Windows.Forms.DialogResult.No:
+                                                buttonsList.Remove(button);
+                                                break;
+                                            case System.Windows.Forms.DialogResult.Cancel:
+                                                continue;
+                                        }
+                                        break;
+                                    case System.Windows.Forms.DialogResult.Cancel:
+                                        continue;
+                                }
+                            }
+                            else
+                                buttonsList.Remove(button);
+                        }
+                        else
+                            buttonsList.Remove(button);
                     }
                     createButtons();
                 }

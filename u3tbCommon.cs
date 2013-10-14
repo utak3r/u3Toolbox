@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.IO;
 
 namespace u3Toolbox
 {
@@ -57,6 +58,37 @@ namespace u3Toolbox
                 "top=\"" + location.Y + "\" " +
                 "width=\"" + size.Width + "\" " +
                 "height=\"" + size.Height + "\" ";
+        }
+    }
+
+    public static class u3tbUtilities
+    {
+        public static string getHomePath()
+        {
+            string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+                ? Environment.GetEnvironmentVariable("HOME")
+                : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+
+            try
+            {
+                if (!Directory.Exists(homePath + "\\.u3ToolBox"))
+                {
+                    Directory.CreateDirectory(homePath + "\\.u3ToolBox");
+                }
+                homePath += "\\.u3ToolBox";
+            }
+            catch
+            {
+                homePath = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            return homePath;
+        }
+
+        public static string getMyDocumentsPath()
+        {
+            return (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+                ? Environment.GetEnvironmentVariable("HOME")
+                : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
     }
 
