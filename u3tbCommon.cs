@@ -65,29 +65,93 @@ namespace u3Toolbox
     {
         private System.Drawing.Color gradientColor1;
         private System.Drawing.Color gradientColor2;
+        private System.Drawing.Color frameColor;
         private System.Drawing.Color textColor;
+        private System.Drawing.FontStyle textFontStyle;
+
+        public enum style
+        {
+            DarkGreys = 1,
+            LightGreys,
+            LightBlues
+        }
+
+        private style currentStyle;
 
         public u3tbStyle()
         {
-            gradientColor1 = Color.FromArgb(150, 150, 150);
-            gradientColor2 = Color.FromArgb(90, 90, 90);
-            textColor = Color.WhiteSmoke;
+            setCurrentStyle(style.DarkGreys);
         }
 
-        public System.Drawing.Color getGradientColor1()
+        public u3tbStyle(style aStyle)
         {
-            return gradientColor1;
+            setCurrentStyle(aStyle);
         }
 
-        public System.Drawing.Color getGradientColor2()
+        public string currentStyleName()
         {
-            return gradientColor2;
+            string name = "";
+            switch (currentStyle)
+            {
+                case style.DarkGreys:
+                    name = "DarkGreys";
+                    break;
+                case style.LightGreys:
+                    name = "LightGreys";
+                    break;
+                case style.LightBlues:
+                    name = "LightBlues";
+                    break;
+            }
+            return name;
         }
 
-        public System.Drawing.Color getTextColor()
+        public style findStyleFromName(string name)
         {
-            return textColor;
+            style foundStyle = style.LightGreys;
+            if (name == "DarkGreys")
+                foundStyle = style.DarkGreys;
+            if (name == "LightGreys")
+                foundStyle = style.LightGreys;
+            if (name == "LightBlues")
+                foundStyle = style.LightBlues;
+            return foundStyle;
         }
+
+        public void setCurrentStyle(style aStyle)
+        {
+            currentStyle = aStyle;
+            switch (currentStyle)
+            {
+                case style.DarkGreys:
+                    gradientColor1 = Color.FromArgb(150, 150, 150);
+                    gradientColor2 = Color.FromArgb(90, 90, 90);
+                    frameColor = Color.WhiteSmoke;
+                    textColor = Color.WhiteSmoke;
+                    textFontStyle = FontStyle.Bold;
+                    break;
+                case style.LightGreys:
+                    gradientColor1 = Color.FromArgb(220, 220, 220);
+                    gradientColor2 = Color.FromArgb(140, 140, 140);
+                    frameColor = Color.WhiteSmoke;
+                    textColor = Color.Black;
+                    textFontStyle = FontStyle.Regular;
+                    break;
+                case style.LightBlues:
+                    gradientColor1 = Color.FromArgb(249, 252, 254);
+                    gradientColor2 = Color.FromArgb(220, 231, 245);
+                    frameColor = Color.Black;
+                    textColor = Color.Black;
+                    textFontStyle = FontStyle.Regular;
+                    break;
+            }
+        }
+
+        public System.Drawing.Color getGradientColor1() { return gradientColor1; }
+        public System.Drawing.Color getGradientColor2() { return gradientColor2; }
+        public System.Drawing.Color getFrameColor() { return frameColor; }
+        public System.Drawing.Color getTextColor() { return textColor; }
+        public System.Drawing.FontStyle getTextFontStyle() { return textFontStyle; }
     }
 
     public static class u3tbUtilities

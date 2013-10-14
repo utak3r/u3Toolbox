@@ -26,7 +26,7 @@ namespace u3Toolbox
 
         private void u3tbMainForm_Load(object sender, EventArgs e)
         {
-            appStyle = new u3tbStyle();
+            appStyle = new u3tbStyle(u3tbStyle.style.LightBlues);
             u3tbLoadConfig();
             createButtons();
             buttonsPanel.Paint += new PaintEventHandler(buttonsPanel_Paint);
@@ -58,21 +58,33 @@ namespace u3Toolbox
             }
 
             // main app preferencies
-            XmlNode prefnode = cfg.SelectSingleNode("u3Toolbox/Preferences/Position");
-            if (prefnode != null)
+            XmlNode prefposnode = cfg.SelectSingleNode("u3Toolbox/Preferences/Position");
+            if (prefposnode != null)
             {
                 try
                 {
                     this.StartPosition = FormStartPosition.Manual;
                     this.DesktopBounds = new Rectangle(
-                        Convert.ToInt32(prefnode.Attributes["left"].InnerText),
-                        Convert.ToInt32(prefnode.Attributes["top"].InnerText),
-                        Convert.ToInt32(prefnode.Attributes["width"].InnerText),
-                        Convert.ToInt32(prefnode.Attributes["height"].InnerText));
+                        Convert.ToInt32(prefposnode.Attributes["left"].InnerText),
+                        Convert.ToInt32(prefposnode.Attributes["top"].InnerText),
+                        Convert.ToInt32(prefposnode.Attributes["width"].InnerText),
+                        Convert.ToInt32(prefposnode.Attributes["height"].InnerText));
                 }
                 catch
                 {
                     this.StartPosition = FormStartPosition.WindowsDefaultBounds;
+                }
+            }
+            XmlNode prefstylenode = cfg.SelectSingleNode("u3Toolbox/Preferences/Style");
+            if (prefstylenode != null)
+            {
+                try
+                {
+                    string style = prefstylenode.Attributes["name"].InnerText;
+                    appStyle.setCurrentStyle(appStyle.findStyleFromName(style));
+                }
+                catch
+                {
                 }
             }
 
@@ -210,11 +222,18 @@ namespace u3Toolbox
 
         private string savePreferences()
         {
-            return "\t<Preferences>\r\n" +
+            string position = 
                 "\t\t<Position left=\"" + this.DesktopBounds.Location.X + "\" " +
                 "top=\"" + this.DesktopBounds.Location.Y + "\" " +
                 "width=\"" + this.DesktopBounds.Size.Width + "\" " +
-                "height=\"" + this.DesktopBounds.Size.Height + "\" />\r\n" +
+                "height=\"" + this.DesktopBounds.Size.Height + "\" />\r\n";
+
+            string style =
+                "\t\t<Style name=\"" + appStyle.currentStyleName() + "\" />\r\n";
+
+            return "\t<Preferences>\r\n" + 
+                position + 
+                style +
                 "\t</Preferences>\r\n";
         }
 
@@ -521,7 +540,7 @@ namespace u3Toolbox
 
             // frame
             g.DrawRectangle(
-                new Pen(appStyle.getTextColor()), 
+                new Pen(appStyle.getFrameColor()), 
                 new Rectangle(0, 0, button.Size.Width - 1, button.Size.Height - 1)
                 );
 
@@ -532,7 +551,7 @@ namespace u3Toolbox
 
             e.Graphics.DrawString(
                 button.Text, 
-                new Font(button.Font, FontStyle.Bold),
+                new Font(button.Font, appStyle.getTextFontStyle()),
                 new SolidBrush(appStyle.getTextColor()), 
                 rect, 
                 format
