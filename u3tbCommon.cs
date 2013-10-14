@@ -106,6 +106,14 @@ namespace u3Toolbox
             return name;
         }
 
+        public string stylesListCommaSeparated()
+        {
+            return
+                "DarkGreys, " +
+                "LightGreys, " +
+                "LightBlues";
+        }
+
         public style findStyleFromName(string name)
         {
             style foundStyle = style.LightGreys;

@@ -229,6 +229,7 @@ namespace u3Toolbox
                 "height=\"" + this.DesktopBounds.Size.Height + "\" />\r\n";
 
             string style =
+                "\t\t<!-- Possible styles currently are: " + appStyle.stylesListCommaSeparated() + " -->\r\n" +
                 "\t\t<Style name=\"" + appStyle.currentStyleName() + "\" />\r\n";
 
             return "\t<Preferences>\r\n" + 
