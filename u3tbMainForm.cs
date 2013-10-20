@@ -371,6 +371,8 @@ namespace u3Toolbox
                 {
                     button.type = u3tbButtonType.ButtonNotepad;
                 }
+                if (buttonsList == null)
+                    buttonsList = new List<u3tbButton>();
                 buttonsList.Add(button);
                 createButtons();
             }
