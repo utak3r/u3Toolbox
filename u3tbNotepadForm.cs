@@ -62,14 +62,14 @@ namespace u3Toolbox
 
         private void u3tbNotepadForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.B && Control.ModifierKeys == Keys.Control)
+            if (e.KeyCode == Keys.B && e.Control)
                 btnFormatBold.PerformClick();
-            if (e.KeyCode == Keys.I && Control.ModifierKeys == Keys.Control)
+            if (e.KeyCode == Keys.I && e.Control)
             {
                 btnFormatItalic.PerformClick();
                 e.Handled = true;
             }
-            if (e.KeyCode == Keys.U && Control.ModifierKeys == Keys.Control)
+            if (e.KeyCode == Keys.U && e.Control)
                 btnFormatUnderline.PerformClick();
         }
 
@@ -162,6 +162,8 @@ namespace u3Toolbox
 
         private void updateStyleButtons()
         {
+            if (notepadText.SelectionFont == null)
+                return;
             FontStyle style = notepadText.SelectionFont.Style;
             bool bold = false;
             bool italic = false;
@@ -184,6 +186,8 @@ namespace u3Toolbox
 
         private void updateFontComboBoxes()
         {
+            if (notepadText.SelectionFont == null)
+                return;
             string name = notepadText.SelectionFont.FontFamily.Name;
             float size = notepadText.SelectionFont.Size;
             //cbFontFamily.SelectedIndex = cbFontFamily.FindStringExact(name);

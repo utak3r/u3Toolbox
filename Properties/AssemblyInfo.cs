@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Piotr 'utak3r' Borys")]
 [assembly: AssemblyProduct("u3Toolbox")]
-[assembly: AssemblyCopyright("Copyright ©  2013 Piotr 'utak3r' Borys")]
+[assembly: AssemblyCopyright("Copyright ©  2013-2014 Piotr 'utak3r' Borys")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.53")]
-[assembly: AssemblyFileVersion("1.0.1.53")]
+[assembly: AssemblyVersion("1.0.2.55")]
+[assembly: AssemblyFileVersion("1.0.2.55")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

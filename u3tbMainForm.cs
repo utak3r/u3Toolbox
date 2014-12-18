@@ -35,11 +35,10 @@ namespace u3Toolbox
 
         private void u3tbMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (Form wnd in Application.OpenForms)
+            for (int i = Application.OpenForms.Count - 1; i > 0; i--)
             {
-                if (wnd != null)
-                if (wnd.Name != "u3tbMainForm")
-                    wnd.Close();
+                if (Application.OpenForms[i] != null)
+                    Application.OpenForms[i].Close();
             }
             saveConfig();
             e.Cancel = false;
